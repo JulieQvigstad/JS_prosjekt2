@@ -18,9 +18,23 @@ img {
     
 }
 
-.container > img {
+#figur {
     width: 250px;
-    position: relative;
-    top: 400px;
-    
+    position: absolute;
+    top: -400px;
+    left: 30px;
+}
+#hinder {
+    width: 200px;
+    position: absolute;
+    bottom: 20px;
+    left: 3000px;
+}
+h1 {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    left: 0;
+   
 }

@@ -1,27 +1,21 @@
 const containerDiv = document.querySelector(".container")
 const figurElm = document.getElementById("figur")
+const hinderElm = document.getElementById("hinder")
+
 const maxLeft = containerDiv.offsetWidth - figurElm.offsetWidth
 const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
 
 
-let x = 0
-let y = 700 //start øverst
-let vx = 0
+let y = maxTopp //start nederst
 let vy = 0 //fart i y retning (opp og ned)
 
 const GRAVITASJON = 1
 
 function hopp() {
     vy += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
-
     y += vy //y-posisjon endrer seg med y-fart
-    figurElm.style.left = x + "px"
     figurElm.style.top = y + "px"
-    if (x > maxLeft || x < 0) {
-        // Har truffet en kant: Snu farts-retning:
-        vx = -vx
-    }
-    if (y > maxTopp) {
+    if (y > maxTopp) { // Treffer bunn
         y = maxTopp
         vy = 0
     }
@@ -36,16 +30,35 @@ function tasteTrykk(event) {
         //console.log("Du presset space")
         vy = -20
     }
-    if (event.key == "a") {
-        vx = -2
-    }
-    if (event.key == "d") {
-        vx = 2
-    }
 
 }
 
 document.addEventListener("keypress", tasteTrykk)
 
-setInterval(hopp, 20)
+
+
+
+let x = maxLeft // Hinder starter her
+const vx = -5 // Farten til hinderne
+
+function oppdaterHindre() {
+    x += vx
+    hinderElm.style.left = x + "px"
+    if (x < 0) {
+        x = maxLeft 
+    }
+}
+
+
+
+function oppdaterAlt() {
+    hopp()
+    oppdaterHindre()
+    requestAnimationFrame(oppdaterAlt)
+}
+
+
+oppdaterAlt()
+// setInterval(oppdaterAlt, 20)
+
 
