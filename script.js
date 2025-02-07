@@ -25,6 +25,10 @@ function hopp() {
         y = maxTopp
         vy = 0
     }
+    if (y < 0) { //Hindrer at figuren spretter ut av rammen på toppen 
+        y = 0
+        vy = 0
+    }
 }
 
 function tasteTrykk(event) {
