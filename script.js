@@ -32,6 +32,10 @@ function tasteTrykk(event) {
     }
 
 }
+function kollisjon(figurElm, hinderElm) { //må fortsette med denne 
+    if (figurElm.x + figurElm.width >= hinderElm.x) 
+        return true
+    }
 
 document.addEventListener("keypress", tasteTrykk)
 
