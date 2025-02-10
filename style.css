@@ -30,11 +30,15 @@ img {
     bottom: 20px;
     left: 3000px;
 }
-h1 {
-    text-align: center;
+#startButton {
+    width: 250px;
     position: absolute;
-    width: 100%;
+    display: flex;
     top: 40px;
-    left: 0;
-   
+    left: 41%;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 50%;
 }
