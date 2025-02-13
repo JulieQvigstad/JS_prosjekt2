@@ -33,12 +33,6 @@ function tasteTrykk(event) {
     }
 
 }
-function kollisjon(figurElm, hinderElm) { //må fortsette med denne 
-    if (figurElm.x + figurElm.width >= hinderElm.x &&
-        figurElm.x <= hinderElm.x + hinderElm.width
-    ) 
-        return true
-    }
 
 document.addEventListener("keypress", tasteTrykk)
 
@@ -57,13 +51,60 @@ function oppdaterHindre() {
     }
 }
 
+// **Kollisjonsdeteksjon**
+function sjekkKollisjon() {
+    const figurRect = figurElm.getBoundingClientRect()
+    const hinderRect = hinderElm.getBoundingClientRect()
 
+    const buffer = 50
+
+    if (
+        figurRect.right > hinderRect.left + buffer &&
+        figurRect.left < hinderRect.right - buffer &&
+        figurRect.bottom > hinderRect.top + buffer &&
+        figurRect.top < hinderRect.bottom - buffer
+    ) {
+        return true // Kollisjon oppdaget
+    }
+    return false
+}
+
+// **Funksjon for å vise "GAME OVER"**
+function visGameOver() {
+    const gameOverText = document.createElement("h1")
+    gameOverText.innerText = "GAME OVER"
+    gameOverText.style.position = "absolute"
+    gameOverText.style.top = "50%"
+    gameOverText.style.left = "50%"
+    gameOverText.style.transform = "translate(-50%, -50%)"
+    gameOverText.style.fontSize = "50px"
+    gameOverText.style.color = "red"
+    gameOverText.style.fontWeight = "bold"
+    gameOverText.style.fontFamily = "Press Start 2P"
+    gameOverText.style.padding = "20px"
+    gameOverText.style.borderRadius = "10px"
+    
+    document.body.appendChild(gameOverText)
+}
+
+
+let spillAktivt = true
 
 function oppdaterAlt() {
+    if (!spillAktivt) return // Stopper spillet hvis kollisjon har skjedd
+
     hopp()
     oppdaterHindre()
-    requestAnimationFrame(oppdaterAlt)
+
+    if (sjekkKollisjon()) {
+        spillAktivt = false
+        console.log("Kollisjon! Spillet stopper.")
+        visGameOver() //Viser skriften "game over"
+    } else {
+        requestAnimationFrame(oppdaterAlt)
+    }
 }
+
 
 
 oppdaterAlt()
