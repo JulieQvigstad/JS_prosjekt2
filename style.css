@@ -32,11 +32,11 @@ img {
     left: 3000px;
 }
 #startButton {
-    width: 250px;
+    width: 400px;
     position: absolute;
     display: flex;
     top: 40px;
-    left: 41%;
+    left: 37%;
     padding: 15px;
     align-items: center;
     justify-content: center;

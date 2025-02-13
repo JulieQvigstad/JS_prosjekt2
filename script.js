@@ -85,7 +85,14 @@ function visGameOver() {
     gameOverText.style.borderRadius = "10px"
     
     document.body.appendChild(gameOverText)
+
+    setTimeout(() => {
+        startButton.style.display = "block" // Viser startknappen igjen
+        //gameOverText.remove() // Fjerner "GAME OVER"-teksten
+    }, 1000)
 }
+
+
 
 
 let spillAktivt = true
@@ -105,9 +112,14 @@ function oppdaterAlt() {
     }
 }
 
+startButton.addEventListener("click", () => {
+    spillAktivt = true
+    startButton.style.display = "none" // Skjuler startknappen
+    oppdaterAlt()
+})
 
 
-oppdaterAlt()
-// setInterval(oppdaterAlt, 20)
+
+
 
 
