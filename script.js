@@ -8,10 +8,13 @@ const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
 const hinderStart = maxLeft + 500
 
 
-let y = maxTopp //start nederst
+let y = maxTopp //start nederst y=katt
 let vy = 0 //fart i y retning (opp og ned)
+let x = hinderStart //Hinderets startsposisjon
+const vx = -5 //Hastighet til hinderet 
 
 const GRAVITASJON = 1
+let spillAktivt = false //Spillet starter ikke aktivt
 
 function hopp() {
     if (!spillAktivt) return
@@ -40,10 +43,8 @@ function tasteTrykk(event) {
 document.addEventListener("keypress", tasteTrykk)
 
 
-
-
-let x = hinderStart // Hinder starter her
-const vx = -5 // Farten til hinderne
+//let x = hinderStart // Hinder starter her
+//const vx = -5 // Farten til hinderne
 
 function oppdaterHindre() {
     if (!spillAktivt) return
@@ -51,7 +52,7 @@ function oppdaterHindre() {
     x += vx
     hinderElm.style.left = x + "px"
     
-    if (x < 0-hinderElm.offsetWidth) {
+    if (x < -hinderElm.offsetWidth) {
         x = hinderStart 
         hinderElm.style.bottom = 100 + "px"
     }
@@ -71,7 +72,7 @@ function sjekkKollisjon() {
     ) 
 }
 
-// **Funksjon for å vise "GAME OVER"**
+//Funksjon for å vise "GAME OVER"
 function visGameOver() {
     spillAktivt = false
 
@@ -93,14 +94,16 @@ function visGameOver() {
     setTimeout(() => {
         startButton.style.display = "block" // Viser startknappen igjen
         gameOverText.remove() // Fjerner "GAME OVER"-teksten
-    }, 1000) //tiden det tar før teksten kommer 
+    }, 1500) //tiden det tar før teksten kommer 
 }
 
+//Starter spillet på nytt
 function startSpill() {
     spillAktivt = true
+
     y = maxTopp // Nullstiller figurens posisjon
     vy = 0
-    x = hinderElm.offsetLeft // Beholder hinderets posisjon
+    x = hinderStart //flytter hinderet til startposisjonen sin
 
     figurElm.style.top = y + "px"
     hinderElm.style.left = x + "px"
@@ -110,9 +113,7 @@ function startSpill() {
 }
 
 
-
-
-let spillAktivt = true
+//let spillAktivt = true
 
 function oppdaterAlt() {
     if (!spillAktivt) return // Stopper spillet hvis kollisjon har skjedd
