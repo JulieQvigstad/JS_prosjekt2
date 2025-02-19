@@ -7,6 +7,9 @@ const maxLeft = containerDiv.offsetWidth - figurElm.offsetWidth
 const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
 const hinderStart = maxLeft + 500
 
+const looseSound = document.getElementById("looserSound")
+const lydSpiller = new Audio("looser.mp3")
+
 
 let y = maxTopp //start nederst y=katt
 let vy = 0 //fart i y retning (opp og ned)
@@ -60,9 +63,9 @@ function oppdaterHindre() {
 
 // Sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
-    const figurRect = figurElm.getBoundingClientRect()
-    const hinderRect = hinderElm.getBoundingClientRect()
-    const buffer = 50
+    const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet
+    const hinderRect = hinderElm.getBoundingClientRect() //samme 
+    const buffer = 50 //gjør at kollisjonen skjer når man ser at de kolliderer 
 
     return (
         figurRect.right > hinderRect.left + buffer &&
@@ -75,6 +78,7 @@ function sjekkKollisjon() {
 //Funksjon for å vise "GAME OVER"
 function visGameOver() {
     spillAktivt = false
+    
 
     const gameOverText = document.createElement("h1")
     gameOverText.innerText = "GAME OVER"
@@ -82,7 +86,7 @@ function visGameOver() {
     gameOverText.style.top = "50%"
     gameOverText.style.left = "50%"
     gameOverText.style.transform = "translate(-50%, -50%)"
-    gameOverText.style.fontSize = "50px"
+    gameOverText.style.fontSize = "75px"
     gameOverText.style.color = "red"
     gameOverText.style.fontWeight = "bold"
     gameOverText.style.fontFamily = "Press Start 2P"
@@ -90,11 +94,12 @@ function visGameOver() {
     gameOverText.style.borderRadius = "10px"
     
     document.body.appendChild(gameOverText)
+    looseSound.play();
 
     setTimeout(() => {
         startButton.style.display = "block" // Viser startknappen igjen
         gameOverText.remove() // Fjerner "GAME OVER"-teksten
-    }, 1500) //tiden det tar før teksten kommer 
+    }, 2000) //tiden det tar før teksten kommer 
 }
 
 //Starter spillet på nytt
