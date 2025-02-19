@@ -2,6 +2,7 @@ const containerDiv = document.querySelector(".container")
 const figurElm = document.getElementById("figur")
 const hinderElm = document.getElementById("hinder")
 const ørnElm = document.getElementById("ørn")
+const treElm = document.getElementById("tre")
 const startButton = document.getElementById("startButton")
 
 const maxLeft = containerDiv.offsetWidth - figurElm.offsetWidth
@@ -16,6 +17,7 @@ let y = maxTopp //start nederst y=katt
 let vy = 0 //fart i y retning (opp og ned)
 let buskX = hinderStart //buskens startsposisjon
 let ørnX = hinderStart + 600 //ørnen starter litt bak busken
+let treX = hinderStart + 1200 //treet starter bak ørnen
 const vx = -5 //Hastighet til hinderne  
 
 const GRAVITASJON = 1
@@ -56,10 +58,13 @@ function oppdaterHindre() {
     ørnX += vx
     ørnElm.style.left = ørnX + "px"
 
-    if (buskX < -hinderElm.offsetWidth) {
+    treX += vx
+    treElm.style.left = treX + "px"
+
+    if (buskX < -hinderElm.offsetWidth && ørnX < -ørnElm.offsetWidth && treX < -treElm.offsetWidth) {
         buskX = hinderStart
-        //hinderElm.style.bottom = 100 + "px"
-        ørnX = buskX + 400
+        ørnX = buskX + 600
+        treX = buskX + 1200
     }
 }
 
@@ -68,6 +73,7 @@ function sjekkKollisjon() {
     const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet
     const hinderRect = hinderElm.getBoundingClientRect() //samme 
     const ørnRect = ørnElm.getBoundingClientRect()
+    const treRect = treElm.getBoundingClientRect()
     const buffer = 50 //gjør at kollisjonen skjer når man ser at de kolliderer 
 
     return (
@@ -80,6 +86,11 @@ function sjekkKollisjon() {
         figurRect.left < ørnRect.right - buffer &&
         figurRect.bottom > ørnRect.top + buffer &&
         figurRect.top < ørnRect.bottom - buffer)
+
+        (figurRect.right > treRect.left + buffer &&
+        figurRect.left < treRect.right - buffer &&
+        figurRect.bottom > treRect.top + buffer &&
+        figurRect.top < treRect.bottom - buffer)
     )
 }
 
@@ -156,10 +167,12 @@ startButton.addEventListener("click", () => {
     vy = 0
     buskX = hinderStart
     ørnX = hinderStart + 600
+    treX = hinderStart + 1200
 
     figurElm.style.top = y + "px"
     hinderElm.style.left = buskX + "px"
     ørnElm.style.left = ørnX + "px"
+    treElm.style.left = treX + "px"
 
     oppdaterAlt()
     
