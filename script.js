@@ -1,6 +1,7 @@
 const containerDiv = document.querySelector(".container")
 const figurElm = document.getElementById("figur")
 const hinderElm = document.getElementById("hinder")
+const startButton = document.getElementById("startButton")
 
 const maxLeft = containerDiv.offsetWidth - figurElm.offsetWidth
 const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
@@ -13,6 +14,8 @@ let vy = 0 //fart i y retning (opp og ned)
 const GRAVITASJON = 1
 
 function hopp() {
+    if (!spillAktivt) return
+    
     vy += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
     y += vy //y-posisjon endrer seg med y-fart
     figurElm.style.top = y + "px"
@@ -27,7 +30,7 @@ function hopp() {
 }
 
 function tasteTrykk(event) {
-    if (event.key == " ") {
+    if (event.key == " " && spillAktivt) {
         //console.log("Du presset space")
         vy = -20
     }
@@ -43,34 +46,35 @@ let x = hinderStart // Hinder starter her
 const vx = -5 // Farten til hinderne
 
 function oppdaterHindre() {
+    if (!spillAktivt) return
+    
     x += vx
     hinderElm.style.left = x + "px"
+    
     if (x < 0-hinderElm.offsetWidth) {
         x = hinderStart 
         hinderElm.style.bottom = 100 + "px"
     }
 }
 
-// **Kollisjonsdeteksjon**
+// Sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
     const figurRect = figurElm.getBoundingClientRect()
     const hinderRect = hinderElm.getBoundingClientRect()
-
     const buffer = 50
 
-    if (
+    return (
         figurRect.right > hinderRect.left + buffer &&
         figurRect.left < hinderRect.right - buffer &&
         figurRect.bottom > hinderRect.top + buffer &&
         figurRect.top < hinderRect.bottom - buffer
-    ) {
-        return true // Kollisjon oppdaget
-    }
-    return false
+    ) 
 }
 
 // **Funksjon for å vise "GAME OVER"**
 function visGameOver() {
+    spillAktivt = false
+
     const gameOverText = document.createElement("h1")
     gameOverText.innerText = "GAME OVER"
     gameOverText.style.position = "absolute"
@@ -88,8 +92,21 @@ function visGameOver() {
 
     setTimeout(() => {
         startButton.style.display = "block" // Viser startknappen igjen
-        //gameOverText.remove() // Fjerner "GAME OVER"-teksten
-    }, 1000)
+        gameOverText.remove() // Fjerner "GAME OVER"-teksten
+    }, 1000) //tiden det tar før teksten kommer 
+}
+
+function startSpill() {
+    spillAktivt = true
+    y = maxTopp // Nullstiller figurens posisjon
+    vy = 0
+    x = hinderElm.offsetLeft // Beholder hinderets posisjon
+
+    figurElm.style.top = y + "px"
+    hinderElm.style.left = x + "px"
+
+    startButton.style.display = "none" // Skjuler startknappen
+    requestAnimationFrame(oppdaterAlt) // Starter spill-loop
 }
 
 
@@ -104,7 +121,7 @@ function oppdaterAlt() {
     oppdaterHindre()
 
     if (sjekkKollisjon()) {
-        spillAktivt = false
+        //spillAktivt = false
         console.log("Kollisjon! Spillet stopper.")
         visGameOver() //Viser skriften "game over"
     } else {
@@ -112,11 +129,14 @@ function oppdaterAlt() {
     }
 }
 
-startButton.addEventListener("click", () => {
+startButton.addEventListener("click", startSpill)
+
+/*startButton.addEventListener("click", () => {
     spillAktivt = true
     startButton.style.display = "none" // Skjuler startknappen
     oppdaterAlt()
-})
+})*/
+
 
 
 
