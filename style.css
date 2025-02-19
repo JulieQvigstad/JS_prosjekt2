@@ -31,6 +31,14 @@ img {
     bottom: 20px;
     left: 3000px;
 }
+
+#ørn {
+    width: 200px;
+    position: absolute;
+    bottom: 400px;
+    left: 3000px;
+}
+
 #startButton {
     width: 400px;
     position: absolute;
