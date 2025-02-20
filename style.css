@@ -46,6 +46,13 @@ img {
     left: 2000px;
 }
 
+#blomst {
+    width: 200px;
+    position: absolute;
+    bottom: 100px;
+    left: 2000px;
+}
+
 #startButton {
     width: 400px;
     position: absolute;
