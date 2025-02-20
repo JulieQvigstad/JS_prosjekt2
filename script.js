@@ -15,14 +15,19 @@ const looseSound = document.getElementById("looserSound")
 
 let y = maxTopp //start nederst y=katt
 let vy = 0 //fart i y retning (opp og ned)
-let buskX = hinderStart //buskens startsposisjon
-let ørnX = hinderStart + 600 //ørnen starter litt bak busken
-let treX = hinderStart + 1400 //treet starter bak ørnen
-let blomstX = hinderStart + 2000
 const vx = -5 //Hastighet til hinderne  
+let spillAktivt = false;
 
 const GRAVITASJON = 1
 //let spillAktivt = false //Spillet starter ikke aktivt
+
+//en array for hinderne 
+let hindre = [
+    { element: hinderElm, x: hinderStart },
+    { element: ørnElm, x: hinderStart + 600 },
+    { element: treElm, x: hinderStart + 1400 },
+    { element: blomstElm, x: hinderStart + 2000 }
+];
 
 function hopp() {
     vy += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
@@ -50,57 +55,54 @@ document.addEventListener("keypress", tasteTrykk)
 
 
 function oppdaterHindre() {
-    buskX += vx
-    hinderElm.style.left = buskX + "px"
+    let alleUte = true;
 
-    ørnX += vx
-    ørnElm.style.left = ørnX + "px"
+    hindre.forEach(hinder => {
+        hinder.x += vx;
+        hinder.element.style.left = hinder.x + "px";
 
-    treX += vx
-    treElm.style.left = treX + "px"
+        if (hinder.x > -hinder.element.offsetWidth) {
+            alleUte = false; //minst et hinder er fortsatt i skjermen
+        }
+    });
 
-    blomstX += vx
-    blomstElm.style.left = blomstX + "px"
-
-    if (buskX < -hinderElm.offsetWidth && ørnX < -ørnElm.offsetWidth && treX < -treElm.offsetWidth && blomstX < -blomstElm.offsetWidth) {
-        buskX = hinderStart
-        ørnX = buskX + 600
-        treX = buskX + 1400
-        blomstX = buskX + 2000
+    if(alleUte) {
+        stokkerHindre();
     }
+ }
+    
+
+function stokkerHindre () {
+    for (let i = hindre.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random()* (i + 1));
+        [hindre[i], hindre[j]] = [hindre[j], hindre[i]];
+    }
+
+    //nye startposisjoner 
+    let startX = hinderStart;
+    hindre.forEach(hinder => {
+        hinder.x = startX;
+        hinder.element.style.left = startX + "px";
+        startX += 600; // justerer avstanden mellom hindrene
+    });
 }
 
 // Sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
     const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet
-    const hinderRect = hinderElm.getBoundingClientRect() //samme 
-    const ørnRect = ørnElm.getBoundingClientRect()
-    const treRect = treElm.getBoundingClientRect()
-    const blomstRect = blomstElm.getBoundingClientRect()
     const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
 
-    return (
-        (figurRect.right > hinderRect.left + buffer &&
-        figurRect.left < hinderRect.right - buffer &&
-        figurRect.bottom > hinderRect.top + buffer &&
-        figurRect.top < hinderRect.bottom - buffer) ||
+    return hindre.some(hinder => {
+        const hinderRect = hinder.element.getBoundingClientRect();
+        return (
+            figurRect.right > hinderRect.left + buffer &&
+            figurRect.left < hinderRect.right - buffer &&
+            figurRect.bottom > hinderRect.top + buffer &&
+            figurRect.top < hinderRect.bottom - buffer
+        );
+    });
+    }
 
-        (figurRect.right > ørnRect.left + buffer &&
-        figurRect.left < ørnRect.right - buffer &&
-        figurRect.bottom > ørnRect.top + buffer &&
-        figurRect.top < ørnRect.bottom - buffer) ||
-
-        (figurRect.right > treRect.left + buffer &&
-        figurRect.left < treRect.right - buffer &&
-        figurRect.bottom > treRect.top + buffer &&
-        figurRect.top < treRect.bottom - buffer) ||
-
-        (figurRect.right > blomstRect.left + buffer &&
-        figurRect.left < blomstRect.right - buffer &&
-        figurRect.bottom > blomstRect.top + buffer &&
-        figurRect.top < blomstRect.bottom - buffer)
-    )
-}
 
 //Funksjon for å vise "GAME OVER"
 function visGameOver() {
@@ -129,7 +131,7 @@ function visGameOver() {
     }, 2000) //tiden det tar før teksten kommer 
 }
 
-let spillAktivt = false 
+//let spillAktivt = false 
 
 
 function oppdaterAlt() {
@@ -153,21 +155,19 @@ startButton.addEventListener("click", () => {
     
     y = maxTopp
     vy = 0
-    buskX = hinderStart
-    ørnX = hinderStart + 600
-    treX = hinderStart + 1400
-    blomstX = hinderStart + 2000
+
+    let startX = hinderStart;
+    hindre.forEach(hinder => {
+        hinder.x = startX;
+        hinder.element.style.left = startX + "px";
+        startX += 600; 
+    });
+
     
-    figurElm.style.top = y + "px"
-    hinderElm.style.left = buskX + "px"
-    ørnElm.style.left = ørnX + "px"
-    treElm.style.left = treX + "px"
-    blomstElm.style.left = blomstX + "px"
     
     oppdaterAlt()
     
-    //buskX = hinderStart
-    //ørnX = hinderStart + 400
+    
     
 })
 
