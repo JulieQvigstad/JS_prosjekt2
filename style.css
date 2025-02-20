@@ -29,14 +29,21 @@ img {
     width: 200px;
     position: absolute;
     bottom: 20px;
-    left: 3000px;
+    left: 2000px;
 }
 
 #ørn {
     width: 200px;
     position: absolute;
     bottom: 475px;
-    left: 3000px;
+    left: 2000px;
+}
+
+#tre {
+    width: 200px;
+    position: absolute;
+    bottom: 100px;
+    left: 2000px;
 }
 
 #startButton {

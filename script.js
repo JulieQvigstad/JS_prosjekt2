@@ -10,14 +10,13 @@ const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
 const hinderStart = maxLeft + 500
 
 const looseSound = document.getElementById("looserSound")
-//const lydSpiller = new Audio("looser.mp3")
 
 
 let y = maxTopp //start nederst y=katt
 let vy = 0 //fart i y retning (opp og ned)
 let buskX = hinderStart //buskens startsposisjon
 let ørnX = hinderStart + 600 //ørnen starter litt bak busken
-let treX = hinderStart + 1200 //treet starter bak ørnen
+let treX = hinderStart + 1400 //treet starter bak ørnen
 const vx = -5 //Hastighet til hinderne  
 
 const GRAVITASJON = 1
@@ -48,9 +47,6 @@ function tasteTrykk(event) {
 document.addEventListener("keypress", tasteTrykk)
 
 
-//let x = hinderStart // Hinder starter her
-//const vx = -5 // Farten til hinderne
-
 function oppdaterHindre() {
     buskX += vx
     hinderElm.style.left = buskX + "px"
@@ -64,7 +60,7 @@ function oppdaterHindre() {
     if (buskX < -hinderElm.offsetWidth && ørnX < -ørnElm.offsetWidth && treX < -treElm.offsetWidth) {
         buskX = hinderStart
         ørnX = buskX + 600
-        treX = buskX + 1200
+        treX = buskX + 1400
     }
 }
 
@@ -74,7 +70,7 @@ function sjekkKollisjon() {
     const hinderRect = hinderElm.getBoundingClientRect() //samme 
     const ørnRect = ørnElm.getBoundingClientRect()
     const treRect = treElm.getBoundingClientRect()
-    const buffer = 50 //gjør at kollisjonen skjer når man ser at de kolliderer 
+    const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
 
     return (
         (figurRect.right > hinderRect.left + buffer &&
@@ -85,7 +81,7 @@ function sjekkKollisjon() {
         (figurRect.right > ørnRect.left + buffer &&
         figurRect.left < ørnRect.right - buffer &&
         figurRect.bottom > ørnRect.top + buffer &&
-        figurRect.top < ørnRect.bottom - buffer)
+        figurRect.top < ørnRect.bottom - buffer) ||
 
         (figurRect.right > treRect.left + buffer &&
         figurRect.left < treRect.right - buffer &&
@@ -167,7 +163,7 @@ startButton.addEventListener("click", () => {
     vy = 0
     buskX = hinderStart
     ørnX = hinderStart + 600
-    treX = hinderStart + 1200
+    treX = hinderStart + 1400
 
     figurElm.style.top = y + "px"
     hinderElm.style.left = buskX + "px"
