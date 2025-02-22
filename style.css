@@ -5,6 +5,10 @@
     font-family: "Press Start 2P", serif;
 }
 
+body {
+    overflow: hidden;
+}
+
 img {
     width: 100%;
 }
@@ -40,7 +44,7 @@ img {
 }
 
 #tre {
-    width: 200px;
+    width: 220px;
     position: absolute;
     bottom: 150px;
     left: 2000px;
@@ -49,7 +53,7 @@ img {
 #blomst {
     width: 250px;
     position: absolute;
-    bottom: 175px;
+    bottom: 155px;
     left: 2000px;
 }
 
