@@ -210,10 +210,7 @@ startButton.addEventListener("click", () => {
         startX += 600;
     });
 
-
-
     oppdaterAlt()
-
 
 
 })
