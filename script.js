@@ -164,10 +164,10 @@ function visGameOver() {
     }
 
     setTimeout(() => {
-        startButton.style.display = "block"; // Viser startknappen igjen
+        startButton.style.display = "block"; //viser startknappen igjen
         gameOverText.remove(); //fjerner game over teksten
         timeText.remove();
-    }, 3000) //tiden det tar før teksten kommer 
+    }, 3000) //tiden det tar før start knappen kommer tilbake
 }
 
 
