@@ -20,8 +20,24 @@ let vy = 0 //fart i y retning (opp og ned)
 const vx = -5 //Hastighet til hinderne  
 let spillAktivt = false;
 
+//timer
+let spillTid = 0; //tiden i sekunder
+let tidsIntervall; 
+
+//tiden vises i høyre hjørnet mens man spiller 
+const tidDisplay = document.createElement("div");
+tidDisplay.style.position = "absolute";
+tidDisplay.style.top = "10px";
+tidDisplay.style.right = "20px";
+tidDisplay.style.fontSize = "30px";
+tidDisplay.style.color = "white";
+tidDisplay.style.fontWeight = "bold";
+tidDisplay.style.fontFamily = "Arial, sans-serif";
+
+document.body.appendChild(tidDisplay);
+
 const GRAVITASJON = 1
-//let spillAktivt = false //Spillet starter ikke aktivt
+
 
 //en array for hinderne 
 let hindre = [
@@ -112,6 +128,8 @@ function sjekkKollisjon() {
 
 //Funksjon for å vise "GAME OVER"
 function visGameOver() {
+    clearInterval(tidsIntervall); //stopper tiden
+
     const gameOverText = document.createElement("h1")
     gameOverText.innerText = "GAME OVER"
     gameOverText.style.position = "absolute"
@@ -127,14 +145,27 @@ function visGameOver() {
 
     document.body.appendChild(gameOverText)
 
+    //tiden vises under game over
+    const timeText = document.createElement("h2");
+    timeText.innerText = `Tid: ${spillTid} sekunder`;
+    timeText.style.position = "absolute";
+    timeText.style.top = "30%";
+    timeText.style.left = "50%";
+    timeText.style.transform = "translate(-50%, -50%)";
+    timeText.style.fontSize = "40px";
+    timeText.style.color = "green";
+    timeText.style.fontWeight = "bold";
+    document.body.appendChild(timeText);
+
     if (looseSound) {
         looseSound.play()
     }
 
     setTimeout(() => {
-        startButton.style.display = "block" // Viser startknappen igjen
-        gameOverText.remove() // Fjerner "GAME OVER"-teksten
-    }, 2000) //tiden det tar før teksten kommer 
+        startButton.style.display = "block"; // Viser startknappen igjen
+        gameOverText.remove(); // Fjerner "GAME OVER"-teksten
+        timeText.remove();
+    }, 3000) //tiden det tar før teksten kommer 
 }
 
 //let spillAktivt = false 
@@ -161,6 +192,12 @@ startButton.addEventListener("click", () => {
 
     startSound.currentTime = 0; //spiller lyd når man trykkker på startknapepn
     startSound.play();
+
+    spillTid = 0;
+    tidsIntervall = setInterval (() => {
+        spillTid++;
+        tidDisplay.innerText = `Tid: ${spillTid} sekunder`
+    }, 1000);
 
     
     y = maxTopp
