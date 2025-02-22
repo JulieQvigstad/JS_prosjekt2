@@ -112,15 +112,15 @@ function stokkerHindre() {
 const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
 // Sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
-    const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet
+    const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet i forhold til skjermen
 
-    return hindre.some(hinder => {
-        const hinderRect = hinder.element.getBoundingClientRect();
+    return hindre.some(hinder => { //hindre er listen over alle hinderne, some går gjennom hvert hinder å sjekker kollisjon
+        const hinderRect = hinder.element.getBoundingClientRect(); //samme som over, gjør at man kan se om figuren og et hinder overlapper hverandre 
         return (
-            figurRect.right > hinderRect.left + buffer &&
+            figurRect.right > hinderRect.left + buffer && //sjekker om de overlapper
             figurRect.left < hinderRect.right - buffer &&
             figurRect.bottom > hinderRect.top + buffer &&
-            figurRect.top < hinderRect.bottom - buffer
+            figurRect.top < hinderRect.bottom - buffer //hvis alle sjekkene er true har det skjedd en kollisjon
         );
     });
 }
