@@ -49,13 +49,13 @@ let hindre = [
 
 function hopp() {
     vKatt += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
-    Katt += vKatt //y-posisjon endrer seg med y-fart
+    Katt += vKatt //katt-posisjon endrer seg med katt-fart
     figurElm.style.top = Katt + "px"
     if (Katt > maxTopp) { // Treffer bunn
         Katt = maxTopp
         vKatt = 0
     }
-    if (Katt < 0) { //Hindrer at figuren spretter ut av rammen på toppen 
+    if (Katt < 0) { //hindrer at figuren spretter ut av rammen på toppen 
         Katt = 0
         vKatt = 0
     }
@@ -110,7 +110,7 @@ function stokkerHindre() {
 }
 
 const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
-// Sjekker om det har skjedd kollisjon
+//sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
     const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet i forhold til skjermen
 
@@ -126,7 +126,7 @@ function sjekkKollisjon() {
 }
 
 
-//Funksjon for å vise "GAME OVER"
+//funksjon for å vise "GAME OVER"
 function visGameOver() {
     clearInterval(tidsIntervall); //stopper tiden
 
@@ -165,14 +165,14 @@ function visGameOver() {
 
     setTimeout(() => {
         startButton.style.display = "block"; // Viser startknappen igjen
-        gameOverText.remove(); // Fjerner "GAME OVER"-teksten
+        gameOverText.remove(); //fjerner game over teksten
         timeText.remove();
     }, 3000) //tiden det tar før teksten kommer 
 }
 
 
 function oppdaterAlt() {
-    if (!spillAktivt) return // Stopper spillet hvis kollisjon har skjedd
+    if (!spillAktivt) return //stopper spillet hvis kollisjon har skjedd
 
     hopp()
     oppdaterHindre()
@@ -180,7 +180,7 @@ function oppdaterAlt() {
     if (sjekkKollisjon()) {
         spillAktivt = false
         console.log("Kollisjon! Spillet stopper.")
-        visGameOver() //Viser skriften "game over"
+        visGameOver() //viser skriften game over
     } else {
         requestAnimationFrame(oppdaterAlt)
     }
@@ -188,7 +188,7 @@ function oppdaterAlt() {
 
 startButton.addEventListener("click", () => {
     spillAktivt = true
-    startButton.style.display = "none" // Skjuler startknappen
+    startButton.style.display = "none" //skjuler startknappen
 
     startSound.currentTime = 0; //spiller lyd når man trykkker på startknapepn
     startSound.play();
