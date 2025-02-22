@@ -15,8 +15,8 @@ const jumpSound = document.getElementById("jumpSound")
 const startSound = document.getElementById("startSound")
 
 
-let Katt = maxTopp //start nederst y=katt
-let vKatt = 0 //fart i y retning (opp og ned)
+let Katt = maxTopp //start nederst (katten)
+let vKatt = 0 //fart i y retning (farten til katten: opp og ned)
 const vx = -5 //Hastighet til hinderne  
 let spillAktivt = false;
 
@@ -169,8 +169,6 @@ function visGameOver() {
         timeText.remove();
     }, 3000) //tiden det tar før teksten kommer 
 }
-
-//let spillAktivt = false 
 
 
 function oppdaterAlt() {
