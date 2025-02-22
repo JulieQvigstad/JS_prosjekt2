@@ -11,6 +11,7 @@ const maxTopp = containerDiv.offsetHeight - figurElm.offsetHeight
 const hinderStart = maxLeft + 500
 
 const looseSound = document.getElementById("looserSound")
+const jumpSound = document.getElementById("jumpSound")
 
 
 let y = maxTopp //start nederst y=katt
@@ -48,6 +49,10 @@ function tasteTrykk(event) {
         console.log("Du presset space")
         vy = -20
     }
+
+const jumpSound = document.getElementById("jumpSound");
+jumpSound.currentTime = 0;
+jumpSound.play();
 
 }
 

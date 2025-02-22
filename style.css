@@ -26,14 +26,14 @@ img {
     left: 30px;
 }
 #hinder {
-    width: 200px;
+    width: 300px;
     position: absolute;
     bottom: 20px;
     left: 2000px;
 }
 
 #ørn {
-    width: 200px;
+    width: 250px;
     position: absolute;
     bottom: 475px;
     left: 2000px;
@@ -47,9 +47,9 @@ img {
 }
 
 #blomst {
-    width: 200px;
+    width: 250px;
     position: absolute;
-    bottom: 100px;
+    bottom: 175px;
     left: 2000px;
 }
 
