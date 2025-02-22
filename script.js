@@ -12,6 +12,7 @@ const hinderStart = maxLeft + 500
 
 const looseSound = document.getElementById("looserSound")
 const jumpSound = document.getElementById("jumpSound")
+const startSound = document.getElementById("startSound")
 
 
 let y = maxTopp //start nederst y=katt
@@ -44,7 +45,7 @@ function hopp() {
     }
 }
 
-function tasteTrykk(event) {
+function tasteTrykk(event) { //når man trykker space hopper katten
     if (event.key == " ") {
         console.log("Du presset space")
         vy = -20
@@ -67,7 +68,7 @@ function oppdaterHindre() {
         hinder.element.style.left = hinder.x + "px";
 
         if (hinder.x > -hinder.element.offsetWidth) {
-            alleUte = false; //minst et hinder er fortsatt i skjermen
+            alleUte = false; 
         }
     });
 
@@ -157,6 +158,10 @@ function oppdaterAlt() {
 startButton.addEventListener("click", () => {
     spillAktivt = true
     startButton.style.display = "none" // Skjuler startknappen
+
+    startSound.currentTime = 0; //spiller lyd når man trykkker på startknapepn
+    startSound.play();
+
     
     y = maxTopp
     vy = 0
@@ -177,24 +182,6 @@ startButton.addEventListener("click", () => {
 })
 
 
-//Starter spillet på nytt
-/*function startSpill() {
-    spillAktivt = true
-
-    y = maxTopp // Nullstiller figurens posisjon
-    vy = 0
-    x = hinderStart //flytter hinderet til startposisjonen sin
-
-    figurElm.style.top = y + "px"
-    hinderElm.style.left = x + "px"
-
-    startButton.style.display = "none" // Skjuler startknappen
-    requestAnimationFrame(oppdaterAlt) // Starter spill-loop
-}
-*/
-
-
-//let spillAktivt = true
 
 
 
