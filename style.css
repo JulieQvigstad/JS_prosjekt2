@@ -24,7 +24,7 @@ img {
 }
 
 #figur {
-    width: 250px;
+    width: 270px;
     position: absolute;
     top: -400px;
     left: 30px;
@@ -53,7 +53,7 @@ img {
 #blomst {
     width: 250px;
     position: absolute;
-    bottom: 155px;
+    bottom: 115px;
     left: 2000px;
 }
 
