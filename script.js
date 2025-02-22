@@ -15,8 +15,8 @@ const jumpSound = document.getElementById("jumpSound")
 const startSound = document.getElementById("startSound")
 
 
-let y = maxTopp //start nederst y=katt
-let vy = 0 //fart i y retning (opp og ned)
+let Katt = maxTopp //start nederst y=katt
+let vKatt = 0 //fart i y retning (opp og ned)
 const vx = -5 //Hastighet til hinderne  
 let spillAktivt = false;
 
@@ -48,23 +48,23 @@ let hindre = [
 ];
 
 function hopp() {
-    vy += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
-    y += vy //y-posisjon endrer seg med y-fart
-    figurElm.style.top = y + "px"
-    if (y > maxTopp) { // Treffer bunn
-        y = maxTopp
-        vy = 0
+    vKatt += GRAVITASJON //gravitasjonen påvirker farten i y-retning (faller ned)
+    Katt += vKatt //y-posisjon endrer seg med y-fart
+    figurElm.style.top = Katt + "px"
+    if (Katt > maxTopp) { // Treffer bunn
+        Katt = maxTopp
+        vKatt = 0
     }
-    if (y < 0) { //Hindrer at figuren spretter ut av rammen på toppen 
-        y = 0
-        vy = 0
+    if (Katt < 0) { //Hindrer at figuren spretter ut av rammen på toppen 
+        Katt = 0
+        vKatt = 0
     }
 }
 
 function tasteTrykk(event) { //når man trykker space hopper katten
     if (event.key == " ") {
         console.log("Du presset space")
-        vy = -20
+        vKatt = -20
     }
 
     const jumpSound = document.getElementById("jumpSound");
@@ -202,8 +202,8 @@ startButton.addEventListener("click", () => {
     }, 1000);
 
 
-    y = maxTopp
-    vy = 0
+    Katt = maxTopp
+    vKatt = 0
 
     let startX = hinderStart;
     hindre.forEach(hinder => {
