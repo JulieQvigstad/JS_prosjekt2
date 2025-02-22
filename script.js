@@ -22,7 +22,7 @@ let spillAktivt = false;
 
 //timer
 let spillTid = 0; //tiden i sekunder
-let tidsIntervall; 
+let tidsIntervall;
 
 //tiden vises i høyre hjørnet mens man spiller 
 const tidDisplay = document.createElement("div");
@@ -67,9 +67,9 @@ function tasteTrykk(event) { //når man trykker space hopper katten
         vy = -20
     }
 
-const jumpSound = document.getElementById("jumpSound");
-jumpSound.currentTime = 0;
-jumpSound.play();
+    const jumpSound = document.getElementById("jumpSound");
+    jumpSound.currentTime = 0;
+    jumpSound.play();
 
 }
 
@@ -84,19 +84,19 @@ function oppdaterHindre() {
         hinder.element.style.left = hinder.x + "px";
 
         if (hinder.x > -hinder.element.offsetWidth) {
-            alleUte = false; 
+            alleUte = false;
         }
     });
 
-    if(alleUte) {
+    if (alleUte) {
         stokkerHindre();
     }
- }
-    
+}
 
-function stokkerHindre () {
+
+function stokkerHindre() {
     for (let i = hindre.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random()* (i + 1));
+        let j = Math.floor(Math.random() * (i + 1));
         [hindre[i], hindre[j]] = [hindre[j], hindre[i]];
     }
 
@@ -109,10 +109,10 @@ function stokkerHindre () {
     });
 }
 
+const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
 // Sjekker om det har skjedd kollisjon
 function sjekkKollisjon() {
     const figurRect = figurElm.getBoundingClientRect() //får info om posisjonen og størrelsen til figur elementet
-    const buffer = 60 //gjør at kollisjonen skjer når man ser at de kolliderer 
 
     return hindre.some(hinder => {
         const hinderRect = hinder.element.getBoundingClientRect();
@@ -123,12 +123,14 @@ function sjekkKollisjon() {
             figurRect.top < hinderRect.bottom - buffer
         );
     });
-    }
+}
 
 
 //Funksjon for å vise "GAME OVER"
 function visGameOver() {
     clearInterval(tidsIntervall); //stopper tiden
+
+    document.querySelectorAll(".gameOverText, .timeText"). forEach(el => el.remove)
 
     const gameOverText = document.createElement("h1")
     gameOverText.innerText = "GAME OVER"
@@ -173,10 +175,10 @@ function visGameOver() {
 
 function oppdaterAlt() {
     if (!spillAktivt) return // Stopper spillet hvis kollisjon har skjedd
-    
+
     hopp()
     oppdaterHindre()
-    
+
     if (sjekkKollisjon()) {
         spillAktivt = false
         console.log("Kollisjon! Spillet stopper.")
@@ -194,12 +196,12 @@ startButton.addEventListener("click", () => {
     startSound.play();
 
     spillTid = 0;
-    tidsIntervall = setInterval (() => {
+    tidsIntervall = setInterval(() => {
         spillTid++;
         tidDisplay.innerText = `Tid: ${spillTid} sekunder`
     }, 1000);
 
-    
+
     y = maxTopp
     vy = 0
 
@@ -207,15 +209,15 @@ startButton.addEventListener("click", () => {
     hindre.forEach(hinder => {
         hinder.x = startX;
         hinder.element.style.left = startX + "px";
-        startX += 600; 
+        startX += 600;
     });
 
-    
-    
+
+
     oppdaterAlt()
-    
-    
-    
+
+
+
 })
 
 
